@@ -1,9 +1,17 @@
-var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+// Initialize CodeMirror editor
+let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
   mode: "javascript",
   theme: "dracula",
   lineNumbers: true,
 });
 
+// Load the saved code (if any) from localStorage
+const savedCode = localStorage.getItem("code");
+if (savedCode) {
+  editor.setValue(savedCode);
+}
+
+// Change editor mode based on language select
 document
   .getElementById("languageSelect")
   .addEventListener("change", function () {
@@ -13,16 +21,18 @@ document
 const runButton = document.getElementById("runButton");
 const output = document.getElementById("output");
 
+// Run code when 'Run' button is clicked
 runButton.addEventListener("click", () => {
   const code = editor.getValue();
   const mode = document.getElementById("languageSelect").value;
 
-  // Reset output content
-  output.innerHTML = `
-    <div id="resizer"></div>
-    <div id="outputContent"></div>
-  `;
+  // Save the code to localStorage
+  localStorage.setItem("code", code);
+
   const outputContent = document.getElementById("outputContent");
+
+  // Clear previous output content
+  outputContent.textContent = "";
 
   try {
     if (mode === "javascript") {
@@ -49,22 +59,25 @@ runButton.addEventListener("click", () => {
     outputContent.textContent = "❌ Error: " + err.message;
   }
 
+  // Enable resizer
   enableResizer();
 });
 
-// Resizing logic
+// Improved resizing logic for the output section
 function enableResizer() {
   const resizer = document.getElementById("resizer");
   let isResizing = false;
   const minHeight = 100;
   const maxHeightRatio = 0.8;
 
-  resizer.addEventListener("mousedown", () => {
+  const startResizing = (e) => {
     isResizing = true;
     document.body.style.cursor = "ns-resize";
-  });
+    document.addEventListener("mousemove", resize);
+    document.addEventListener("mouseup", stopResizing);
+  };
 
-  window.addEventListener("mousemove", (e) => {
+  const resize = (e) => {
     if (!isResizing) return;
     const windowHeight = window.innerHeight;
     const maxHeight = windowHeight * maxHeightRatio;
@@ -73,10 +86,14 @@ function enableResizer() {
       maxHeight
     );
     output.style.height = `${newHeight}px`;
-  });
+  };
 
-  window.addEventListener("mouseup", () => {
+  const stopResizing = () => {
     isResizing = false;
     document.body.style.cursor = "default";
-  });
+    document.removeEventListener("mousemove", resize);
+    document.removeEventListener("mouseup", stopResizing);
+  };
+
+  resizer.addEventListener("mousedown", startResizing);
 }

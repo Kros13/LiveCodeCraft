@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Universal Code Highlighter</title>
+
+    <!-- CodeMirror Core -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+
+    <!-- Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css"
+    />
+
+    <!-- Modes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+
+    <!-- Styling -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #121212;
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background: #1e1e1e;
+        border-bottom: 1px solid #333;
+      }
+
+      select, button {
+        padding: 6px 12px;
+        background: #333;
+        color: white;
+        border: 1px solid #555;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #editor {
+        height: 60vh;
+      }
+
+      .CodeMirror {
+        height: 100%;
+        font-size: 14px;
+        border-bottom: 2px solid #333;
+      }
+
+      #output {
+        display: flex;
+        flex-direction: column;
+        height: 200px;
+        max-height: 60vh;
+        resize: none;
+        overflow: auto;
+        background: #1e1e1e;
+        color: white;
+        border-top: 2px solid #333;
+      }
+
+      #resizer {
+        height: 6px;
+        cursor: ns-resize;
+        background: #444;
+      }
+
+      #outputContent {
+        padding: 10px;
+        white-space: pre-wrap;
+        font-family: monospace;
+        overflow-y: auto;
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <select id="languageSelect">
+        <option value="javascript">JavaScript</option>
+        <option value="htmlmixed">HTML/CSS/JS</option>
+      </select>
+      <button id="runButton">Run</button>
+    </div>
+
+    <textarea id="editor">// Write your JavaScript code here</textarea>
+
+    <div id="output">
+      <div id="resizer"></div>
+      <div id="outputContent">Output will appear here...</div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

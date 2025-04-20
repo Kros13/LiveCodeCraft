@@ -1,5 +1,6 @@
 
 ## LiveCodeCraft
+![image](https://github.com/user-attachments/assets/2f5afaa8-be51-4d31-bfb6-4f32d6fd70a4)
 
 **LiveCodeCraft** is a fast, real-time HTML, CSS, and JavaScript editor and preview tool, built with plain HTML, CSS, and JavaScript. It allows developers to quickly write and preview code, making it ideal for prototyping and testing web development ideas.
 
